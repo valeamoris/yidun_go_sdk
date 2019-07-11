@@ -66,12 +66,14 @@ func (yidun *YiDun) Verify(validate string) (bool, error) {
 	params["nonce"] = fmt.Sprintf("%d", nonce)
 
 	sign := genSignature(yidun.secretKey, params)
-	params["sign"] = sign
+	params["signature"] = sign
 
 	data := url.Values{}
 	for k, v := range params {
 		data.Set(k, v)
 	}
+
+	fmt.Println(data)
 
 	resp, err := http.Post(VerifyUrl, "application/x-www-form-urlencoded",
 		strings.NewReader(data.Encode()))
